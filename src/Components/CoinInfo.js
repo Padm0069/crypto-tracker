@@ -11,6 +11,12 @@ import {
 import SelectButton from "./SelectButton";
 import { chartDays } from "../config/data";
 import { CryptoState } from "../CryptoContext";
+import { format } from "date-fns"; // Import the date-fns format function
+
+import { Chart, LineController, LinearScale, PointElement, CategoryScale, LineElement } from "chart.js"; // Import required components and scales
+
+// Register required components and scales with Chart.js
+Chart.register(LineController, LinearScale, PointElement, CategoryScale, LineElement);
 
 const CoinInfo = ({ coin }) => {
   const [historicData, setHistoricData] = useState();

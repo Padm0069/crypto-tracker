@@ -37,7 +37,7 @@ function Header() {
   const classes = useStyles();
   const { currency, setCurrency } = CryptoState();
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -45,7 +45,7 @@ function Header() {
         <Container>
           <Toolbar>
             <Typography
-              onClick={() => history.push(`/`)}
+              onClick={() => navigate(`/`)}
               variant="h6"
               className={classes.title}
             >
