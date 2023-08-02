@@ -11,7 +11,7 @@ The website also has upper and lower limit price tracking functionality
 which gives user a prompt allert when the price crosses the specified limit.
 ## Check it out:
 <h2>
-  <a href="https://padm0069.github.io/Portfolio-Website/](https://64ca1dbc77c7ea7e6ab0291a--sage-elf-be3d7f.netlify.app/">Crypto-Tracker</a>
+  <a href="https://64ca1dbc77c7ea7e6ab0291a--sage-elf-be3d7f.netlify.app/">Crypto-Tracker</a>
 </h2>
 ## Tech used 
 
