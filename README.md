@@ -1,6 +1,6 @@
 ## Crypro Tracker
 
-![Site Demo](https://github.com/Padm0069/Kuebiko/blob/main/src/components/Landing/Kuebiko-preview.gif)
+![Site Demo]([https://github.com/Padm0069/Kuebiko/blob/main/src/components/Landing/Kuebiko-preview.gif](https://github.com/Padm0069/crypto-tracker/blob/master/public/Untitled.gif))
 # Description :point_left:
 Part of Luganodes Hiring Process, 
 A React based Crypt Tracker website
