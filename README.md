@@ -2,7 +2,7 @@
 
 ![Site Demo](https://github.com/Padm0069/Kuebiko/blob/main/src/components/Landing/Kuebiko-preview.gif)
 # Description :point_left:
-Part of Luganodes Hiring Process
+Part of Luganodes Hiring Process, 
 A React based Crypt Tracker website
 This website will act as a platform for traders to track cryptocurrency on the go, 
 it has many coins to choose from with perfect line chart of each of them in 
