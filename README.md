@@ -25,6 +25,11 @@ which gives user a prompt allert when the price crosses the specified limit.
 - A platform for its users to track cryptocurrency and thier live prices on the go.
 - Upper and lower limit feature to get a alert prompt when the price crosses a threshold.
 - Price Line chart to display the price trajectory over different time frames.
+
+  ## Future Scope
+- Adding Sign up and log in authentication using firebase.
+- Creating a Watchlist section on the user profile.
+- Instead of a prompt alert, providinng email alerts or sms alert.
 ## Installation
 - Setup .env variables  ;
 - Run npm start
