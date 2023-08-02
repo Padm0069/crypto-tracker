@@ -19,10 +19,12 @@ import { Chart, LineController, LinearScale, PointElement, CategoryScale, LineEl
 Chart.register(LineController, LinearScale, PointElement, CategoryScale, LineElement);
 
 const CoinInfo = ({ coin }) => {
-  const [historicData, setHistoricData] = useState();
+  const [historicData, setHistoricData] = useState([]);
   const [days, setDays] = useState(1);
   const { currency } = CryptoState();
-  const [flag,setflag] = useState(false);
+  const [flag, setFlag] = useState(false);
+  const [lowerLimit, setLowerLimit] = useState(0);
+  const [upperLimit, setUpperLimit] = useState(0);
 
   const useStyles = makeStyles((theme) => ({
     container: {
@@ -45,9 +47,13 @@ const CoinInfo = ({ coin }) => {
   const classes = useStyles();
 
   const fetchHistoricData = async () => {
-    const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
-    setflag(true);
-    setHistoricData(data.prices);
+    try {
+      const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
+      setFlag(true);
+      setHistoricData(data.prices);
+    } catch (error) {
+      console.error("Error fetching historical data:", error);
+    }
   };
 
   console.log(coin);
@@ -56,6 +62,25 @@ const CoinInfo = ({ coin }) => {
     fetchHistoricData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days]);
+
+  useEffect(() => {
+    if (historicData.length > 0) {
+      const latestPrice = historicData[historicData.length - 1][1];
+      if (latestPrice < lowerLimit || latestPrice > upperLimit) {
+        // Price crossed the defined limits, show the alert
+        const message = `The price of ${coin.name} has crossed your defined limits. Current price: ${latestPrice} ${currency}. Do you want to proceed?`;
+        const userResponse = window.prompt(message, "Yes");
+        if (userResponse && userResponse.toLowerCase() === "yes") {
+          // User clicked "Yes," you can handle the action here
+          // For example, you can redirect the user to a specific page or perform any other action.
+        } else {
+          // User clicked "Cancel" or closed the prompt, you can handle the action here
+          // For example, you can do nothing or show another message to the user.
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [historicData, lowerLimit, upperLimit]);
 
   const darkTheme = createTheme({
     palette: {
@@ -69,12 +94,8 @@ const CoinInfo = ({ coin }) => {
   return (
     <ThemeProvider theme={darkTheme}>
       <div className={classes.container}>
-        {!historicData | flag===false ? (
-          <CircularProgress
-            style={{ color: "gold" }}
-            size={250}
-            thickness={1}
-          />
+        {!historicData || flag === false ? (
+          <CircularProgress style={{ color: "gold" }} size={250} thickness={1} />
         ) : (
           <>
             <Line
@@ -87,7 +108,6 @@ const CoinInfo = ({ coin }) => {
                       : `${date.getHours()}:${date.getMinutes()} AM`;
                   return days === 1 ? time : date.toLocaleDateString();
                 }),
-
                 datasets: [
                   {
                     data: historicData.map((coin) => coin[1]),
@@ -115,14 +135,31 @@ const CoinInfo = ({ coin }) => {
               {chartDays.map((day) => (
                 <SelectButton
                   key={day.value}
-                  onClick={() => {setDays(day.value);
-                    setflag(false);
+                  onClick={() => {
+                    setDays(day.value);
+                    setFlag(false);
                   }}
                   selected={day.value === days}
                 >
                   {day.label}
                 </SelectButton>
               ))}
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <label htmlFor="lowerLimit" style={{ marginRight: 10 }}>Lower Limit: </label>
+              <input
+                type="number"
+                id="lowerLimit"
+                value={lowerLimit}
+                onChange={(e) => setLowerLimit(Number(e.target.value))}
+              />
+              <label htmlFor="upperLimit" style={{ marginLeft: 10 }}>Upper Limit: </label>
+              <input
+                type="number"
+                id="upperLimit"
+                value={upperLimit}
+                onChange={(e) => setUpperLimit(Number(e.target.value))}
+              />
             </div>
           </>
         )}
